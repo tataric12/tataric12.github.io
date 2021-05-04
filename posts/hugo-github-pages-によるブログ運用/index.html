@@ -10,8 +10,8 @@
   <link rel="icon" type="image/x-icon" href="/">
   <link rel="apple-touch-icon" href="/">
   <link rel="canonical" href="http://htaky.github.io/posts/hugo-github-pages-%E3%81%AB%E3%82%88%E3%82%8B%E3%83%96%E3%83%AD%E3%82%B0%E9%81%8B%E7%94%A8/">
-<link rel="preload" as="style" href="/bundle.css?v=1620149568" media="all">
-<link rel="stylesheet" href="/bundle.css?v=1620149568" media="all">
+<link rel="preload" as="style" href="/bundle.css?v=1620149749" media="all">
+<link rel="stylesheet" href="/bundle.css?v=1620149749" media="all">
 <style>.cdata pre{background-color:#1f2937;color:#e5e7eb}.cdata :not(pre)>code{background-color:#f3f4f6;color:#7c3aed}.chroma .err{background-color:#991b1b;color:#fecaca}.chroma .hl{background-color:#374151}.chroma .ln{color:#9ca3af}.chroma .k,.chroma .kc,.chroma .kd,.chroma .kn,.chroma .kp,.chroma .kr{color:#60a5fa}.chroma .kt{color:#a78bfa}.chroma .na,.chroma .nb{color:#fbbf24}.chroma .nc{color:#f87171}.chroma .no{color:#34d399}.chroma .nd{color:#f87171}.chroma .ne{color:#f87171}.chroma .nf{color:#fbbf24}.chroma .nt{color:#f87171}.chroma .l{color:#a78bfa}.chroma .dl,.chroma .ld,.chroma .s,.chroma .s2,.chroma .sa,.chroma .sb,.chroma .sc,.chroma .sd{color:#34d399}.chroma .se{color:#9ca3af}.chroma .s1,.chroma .sh,.chroma .si,.chroma .sr,.chroma .ss,.chroma .sx{color:#34d399}.chroma .il,.chroma .m,.chroma .mb,.chroma .mf,.chroma .mh,.chroma .mi,.chroma .mo{color:#a78bfa}.chroma .o,.chroma .ow{color:#93c5fd}.chroma .c,.chroma .c1,.chroma .ch,.chroma .cm,.chroma .cp,.chroma .cpf,.chroma .cs,.chroma .p{color:#9ca3af}.chroma .ge{font-style:italic}.chroma .gs{font-weight:700}
 </style>
 
@@ -63,11 +63,11 @@
   },
   "datePublished": "2021-05-04T14:00:00Z",
   "dateModified": "2021-05-04T14:00:00Z",
-  "articleBody": "\u003ch2 id=\"overview\"\u003eOverview\u003c/h2\u003e\n\u003cp\u003e\u003ca href=\"https://gohugo.io/\"\u003eHugo\u003c/a\u003e + GitHub Pages にて運用。\u003c/p\u003e\n\u003ch2 id=\"heading\"\u003e構成\u003c/h2\u003e\n\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth align=\"left\"\u003e項目\u003c/th\u003e\n\u003cth align=\"left\"\u003e管理場所\u003c/th\u003e\n\u003cth align=\"left\"\u003e備考\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd align=\"left\"\u003eソース\u003c/td\u003e\n\u003ctd align=\"left\"\u003eprivate repository\u003c/td\u003e\n\u003ctd align=\"left\"\u003epublic 配下、theme 配下は \u003cstrong\u003egit submodule\u003c/strong\u003e として管理\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd align=\"left\"\u003e公開ファイル\u003c/td\u003e\n\u003ctd align=\"left\"\u003eGitHub Pages 用の公開 repository\u003c/td\u003e\n\u003ctd align=\"left\"\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\n\u003ch3 id=\"-repository-\"\u003eソース管理用の repository について\u003c/h3\u003e\n\u003cdiv class=\"highlight\"\u003e\u003cpre class=\"chroma\"\u003e\u003ccode class=\"language-text\" data-lang=\"text\"\u003e.\n├── Makefile\n├── README.md\n├── archetypes\n├── config.toml\n├── content\n├── data\n├── layouts\n├── public      # \u0026lt;user_name\u0026gt;.github.io \u0026amp; theme を submoduleとして指定\n├── resources\n├── static\n└── themes\n    └── axiom  # git submoduleで管理 https://github.com/marketempower/axiom\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\u003ch2 id=\"deploy-\"\u003edeploy について\u003c/h2\u003e\n\u003cp\u003e以下のような簡易 script を実行し、submodule 管理している public 配下の差分を commit \u0026amp; push することで deploy 完了。\nblog のソース、設定ファイル等を private レポジトリで管理、public(blog 本体)配下のみをパブリックなレポジトリで管理できるようにしている。\u003c/p\u003e\n\u003cdiv class=\"highlight\"\u003e\u003cpre class=\"chroma\"\u003e\u003ccode class=\"language-bash\" data-lang=\"bash\"\u003e\u003cspan class=\"cp\"\u003e#!/bin/bash\n\u003c/span\u003e\u003cspan class=\"cp\"\u003e\u003c/span\u003e\u003cspan class=\"nb\"\u003eset\u003c/span\u003e -ex\n\n\u003cspan class=\"c1\"\u003e# Build.\u003c/span\u003e\nhugo\n\n\u003cspan class=\"c1\"\u003e# Go To Public folder\u003c/span\u003e\n\u003cspan class=\"nb\"\u003epushd\u003c/span\u003e public\n\n\u003cspan class=\"c1\"\u003e# push to public repo\u003c/span\u003e\ngit add .\ngit commit -m \u003cspan class=\"s2\"\u003e\u0026#34;\u003c/span\u003e\u003cspan class=\"s2\"\u003ebuild source at \u003c/span\u003e\u003cspan class=\"k\"\u003e$(\u003c/span\u003edate\u003cspan class=\"k\"\u003e)\u003c/span\u003e\u003cspan class=\"s2\"\u003e.\u003c/span\u003e\u003cspan class=\"s2\"\u003e\u0026#34;\u003c/span\u003e\ngit push origin HEAD\n\u003cspan class=\"nb\"\u003epopd\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e"
+  "articleBody": "\u003ch2 id=\"overview\"\u003eOverview\u003c/h2\u003e\n\u003cp\u003e\u003ca href=\"https://gohugo.io/\"\u003eHugo\u003c/a\u003e + GitHub Pages にて運用。\u003c/p\u003e\n\u003ch2 id=\"heading\"\u003e構成\u003c/h2\u003e\n\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth align=\"left\"\u003e項目\u003c/th\u003e\n\u003cth align=\"left\"\u003e管理場所\u003c/th\u003e\n\u003cth align=\"left\"\u003e備考\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd align=\"left\"\u003eソース\u003c/td\u003e\n\u003ctd align=\"left\"\u003eprivate repository\u003c/td\u003e\n\u003ctd align=\"left\"\u003epublic 配下、theme 配下は \u003cstrong\u003egit submodule\u003c/strong\u003e として管理\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd align=\"left\"\u003e公開ファイル\u003c/td\u003e\n\u003ctd align=\"left\"\u003eGitHub Pages 用の公開 repository\u003c/td\u003e\n\u003ctd align=\"left\"\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\n\u003ch3 id=\"-repository-\"\u003eソース管理用の repository について\u003c/h3\u003e\n\u003cdiv class=\"highlight\"\u003e\u003cpre class=\"chroma\"\u003e\u003ccode class=\"language-text\" data-lang=\"text\"\u003e.\n├── Makefile\n├── README.md\n├── archetypes\n├── config.toml\n├── content\n├── data\n├── layouts\n├── public      # \u0026lt;user_name\u0026gt;.github.io \u0026amp; theme を submoduleとして指定\n├── resources\n├── static\n└── themes\n    └── axiom  # git submoduleで管理 https://github.com/marketempower/axiom\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\u003ch2 id=\"deploy-\"\u003edeploy について\u003c/h2\u003e\n\u003cp\u003e以下のような簡易 script を実行し、submodule 管理している public 配下の差分を commit \u0026amp; push することで deploy 完了。\nblog のソース、設定ファイル等を private レポジトリで管理、public(blog 本体)配下のみをパブリックなレポジトリで管理できるようにしている。\n(GitHub Actionsを利用して自動化する予定。)\u003c/p\u003e\n\u003cdiv class=\"highlight\"\u003e\u003cpre class=\"chroma\"\u003e\u003ccode class=\"language-bash\" data-lang=\"bash\"\u003e\u003cspan class=\"cp\"\u003e#!/bin/bash\n\u003c/span\u003e\u003cspan class=\"cp\"\u003e\u003c/span\u003e\u003cspan class=\"nb\"\u003eset\u003c/span\u003e -ex\n\n\u003cspan class=\"c1\"\u003e# Build.\u003c/span\u003e\nhugo\n\n\u003cspan class=\"c1\"\u003e# Go To Public folder\u003c/span\u003e\n\u003cspan class=\"nb\"\u003epushd\u003c/span\u003e public\n\n\u003cspan class=\"c1\"\u003e# push to public repo\u003c/span\u003e\ngit add .\ngit commit -m \u003cspan class=\"s2\"\u003e\u0026#34;\u003c/span\u003e\u003cspan class=\"s2\"\u003ebuild source at \u003c/span\u003e\u003cspan class=\"k\"\u003e$(\u003c/span\u003edate\u003cspan class=\"k\"\u003e)\u003c/span\u003e\u003cspan class=\"s2\"\u003e.\u003c/span\u003e\u003cspan class=\"s2\"\u003e\u0026#34;\u003c/span\u003e\ngit push origin main\n\u003cspan class=\"nb\"\u003epopd\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e"
 }
 </script>
 
-<link rel="preload" as="script" href="/bundle.js?v=1620149568">
+<link rel="preload" as="script" href="/bundle.js?v=1620149749">
 
 
 </head>
@@ -162,7 +162,8 @@
     └── axiom  # git submoduleで管理 https://github.com/marketempower/axiom
 </code></pre></div><h2 id="deploy-">deploy について</h2>
 <p>以下のような簡易 script を実行し、submodule 管理している public 配下の差分を commit &amp; push することで deploy 完了。
-blog のソース、設定ファイル等を private レポジトリで管理、public(blog 本体)配下のみをパブリックなレポジトリで管理できるようにしている。</p>
+blog のソース、設定ファイル等を private レポジトリで管理、public(blog 本体)配下のみをパブリックなレポジトリで管理できるようにしている。
+(GitHub Actionsを利用して自動化する予定。)</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
 </span><span class="cp"></span><span class="nb">set</span> -ex
 
@@ -175,7 +176,7 @@ hugo
 <span class="c1"># push to public repo</span>
 git add .
 git commit -m <span class="s2">&#34;</span><span class="s2">build source at </span><span class="k">$(</span>date<span class="k">)</span><span class="s2">.</span><span class="s2">&#34;</span>
-git push origin HEAD
+git push origin main
 <span class="nb">popd</span>
 </code></pre></div>
       </article>
@@ -201,7 +202,7 @@ git push origin HEAD
   </div>
 </footer>
 
-<script src="/bundle.js?v=1620149568"></script>
+<script src="/bundle.js?v=1620149749"></script>
 
 
 </body>
